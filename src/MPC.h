@@ -8,9 +8,10 @@ using namespace std;
 
 class MPC {
  public:
-  MPC();
+   const double Lf = 2.67;
+   MPC();
 
-  virtual ~MPC();
+   virtual ~MPC();
 
   // Solve the model given an initial state and polynomial coefficients.
   // Return the first actuatotions.

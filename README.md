@@ -41,3 +41,23 @@ Note: It is possible you get this error message: `/usr/local/bin is not writable
 > sudo chown -R `whoami`:admin /usr/local/share
 > sudo chown -R `whoami`:admin /usr/local/lib
 ```
+
+# [Rubic](https://review.udacity.com/#!/rubrics/896/view) points
+
+## Compilation
+
+### Your code should compile.
+
+## Implementation
+
+### The Model
+
+### Timestep Length and Elapsed Duration (N & dt)
+
+### Polynomial Fitting and MPC Preprocessing
+
+### Model Predictive Control with Latency
+
+## Simulation
+
+### The vehicle must successfully drive a lap around the track.
