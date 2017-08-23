@@ -115,11 +115,17 @@ int main() {
           // Fit polynomial to the points - 3rd order.
           auto coeffs = polyfit(ptsx_transformed, ptsy_transformed, 3);
 
+          // Actuator delay in milliseconds.
+          int actuatorDelay =  100;
+
+          // Calculate the x for the delay.
+          double x_delay = v * 60 * 60 * actuatorDelay / (1000.0);
+
           // Calculate the cross-track error from the polynomial coefficients.
-          double cte = polyeval(coeffs, 0);
+          double cte = polyeval(coeffs, x_delay);
 
           // Calculate the vehicle orientation epsi.
-          double epsi = -atan(coeffs[1]);
+          double epsi = -atan(coeffs[1] + coeffs[2] * x_delay + coeffs[3] * x_delay * x_delay);
 
           // Define the state vector.
           Eigen::VectorXd state(6);
@@ -185,7 +191,7 @@ int main() {
           //
           // NOTE: REMEMBER TO SET THIS TO 100 MILLISECONDS BEFORE
           // SUBMITTING.
-          this_thread::sleep_for(chrono::milliseconds(100));
+          this_thread::sleep_for(chrono::milliseconds(actuatorDelay));
           ws.send(msg.data(), msg.length(), uWS::OpCode::TEXT);
         }
       } else {
