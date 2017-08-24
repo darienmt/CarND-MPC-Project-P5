@@ -60,15 +60,15 @@ class FG_eval {
 
     // Minimize the use of actuators.
     for (int i = 0; i< N - 1; i++) {
-      fg[0] += 300*CppAD::pow(vars[delta_start + i], 2);
-      fg[0] += 300*CppAD::pow(vars[a_start + i], 2);
+      fg[0] += 50*CppAD::pow(vars[delta_start + i], 2);
+      fg[0] += 50*CppAD::pow(vars[a_start + i], 2);
     }
 
     // Minimize the value gap between sequential actuations.
     // (how smooth the actuations are)
     for (int i = 0; i < N - 2; i++) {
-      fg[0] += 10000*CppAD::pow(vars[delta_start + i + 1] - vars[delta_start + i], 2);
-      fg[0] += 1000*CppAD::pow(vars[a_start + i + 1] - vars[a_start + i], 2);
+      fg[0] += 250000*CppAD::pow(vars[delta_start + i + 1] - vars[delta_start + i], 2);
+      fg[0] += 5000*CppAD::pow(vars[a_start + i + 1] - vars[a_start + i], 2);
     }
 
     // Initial constraints.

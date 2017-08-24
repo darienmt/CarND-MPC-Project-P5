@@ -120,8 +120,8 @@ int main() {
           // Actuator delay in milliseconds.
           const int actuatorDelay =  100;
 
-          // Actuator delay in hours.
-          const double delay = actuatorDelay / (1000.0 * 60.0 * 60.0);
+          // Actuator delay in seconds.
+          const double delay = actuatorDelay / 1000.0;
 
           // Initial state.
           const double x0 = 0;
@@ -133,10 +133,10 @@ int main() {
           // State after delay.
           double x_delay = x0 + ( v * cos(psi0) * delay );
           double y_delay = y0 + ( v * sin(psi0) * delay );
-          double psi_delay = psi0 + ( v * delta * delay / mpc.Lf );
+          double psi_delay = psi0 - ( v * delta * delay / mpc.Lf );
           double v_delay = v + a * delay;
           double cte_delay = cte0 + ( v * sin(epsi0) * delay );
-          double epsi_delay = epsi0 - ( v * atan(coeffs[1] + coeffs[2] * x_delay + coeffs[3] * x_delay * x_delay) * delay / mpc.Lf );
+          double epsi_delay = epsi0 - ( v * atan(coeffs[1]) * delay / mpc.Lf );
 
           // Define the state vector.
           Eigen::VectorXd state(6);
