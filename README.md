@@ -144,7 +144,7 @@ The waypoints provided by the simulator are transformed to the car coordinate sy
 
 ### Model Predictive Control with Latency
 
-To handle actuator latency, the state value of the `cte` and `epsi` was calculated not at zero `x` but at `x * v * delay`. This gave me good results and made the latency independent from the `dt` of the controller. The code implementing that could be found at [./src/main.cpp](./src/main.cpp#L121) from line 121 to line 128.
+To handle actuator latency, the state values are calculated using the model and the delay interval. These values are used instead of the initial one. The code implementing that could be found at [./src/main.cpp](./src/main.cpp#L121) from line 121 to line 139.
 
 ## Simulation
 

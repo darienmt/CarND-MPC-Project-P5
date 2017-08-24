@@ -91,6 +91,8 @@ int main() {
           double py = j[1]["y"];
           double psi = j[1]["psi"];
           double v = j[1]["speed"];
+          double delta= j[1]["steering_angle"];
+          double a = j[1]["throttle"];
 
           /*
           * TODO: Calculate steering angle and throttle using MPC.
@@ -116,25 +118,34 @@ int main() {
           auto coeffs = polyfit(ptsx_transformed, ptsy_transformed, 3);
 
           // Actuator delay in milliseconds.
-          int actuatorDelay =  100;
+          const int actuatorDelay =  100;
 
-          // Calculate the x for the delay.
-          double x_delay = v * 60 * 60 * actuatorDelay / (1000.0);
+          // Actuator delay in hours.
+          const double delay = actuatorDelay / (1000.0 * 60.0 * 60.0);
 
-          // Calculate the cross-track error from the polynomial coefficients.
-          double cte = polyeval(coeffs, x_delay);
+          // Initial state.
+          const double x0 = 0;
+          const double y0 = 0;
+          const double psi0 = 0;
+          const double cte0 = coeffs[0];
+          const double epsi0 = -atan(coeffs[1]);
 
-          // Calculate the vehicle orientation epsi.
-          double epsi = -atan(coeffs[1] + coeffs[2] * x_delay + coeffs[3] * x_delay * x_delay);
+          // State after delay.
+          double x_delay = x0 + ( v * cos(psi0) * delay );
+          double y_delay = y0 + ( v * sin(psi0) * delay );
+          double psi_delay = psi0 + ( v * delta * delay / mpc.Lf );
+          double v_delay = v + a * delay;
+          double cte_delay = cte0 + ( v * sin(epsi0) * delay );
+          double epsi_delay = epsi0 - ( v * atan(coeffs[1] + coeffs[2] * x_delay + coeffs[3] * x_delay * x_delay) * delay / mpc.Lf );
 
           // Define the state vector.
           Eigen::VectorXd state(6);
-          state << 0, 0, 0, v, cte, epsi;
+          state << x_delay, y_delay, psi_delay, v_delay, cte_delay, epsi_delay;
 
           // Find the MPC solution.
           auto vars = mpc.Solve(state, coeffs);
 
-          double steer_value = vars[0]/(deg2rad(25) * mpc.Lf);
+          double steer_value = vars[0]/deg2rad(25);
           double throttle_value = vars[1];
 
           json msgJson;
