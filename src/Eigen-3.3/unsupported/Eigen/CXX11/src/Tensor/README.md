@@ -673,7 +673,7 @@ code only sets the values of the first row of the tensor.
 
     Eigen::Tensor<int, 2> a(2, 3);
     a.setConstant(1000);
-    a.setValues({{10, 20, 30}});
+    a.setValues({ {10, 20, 30} });
     cout << "a" << endl << a << endl << endl;
     =>
     a
@@ -1077,7 +1077,7 @@ Example: Reduction along one dimension.
 Example: Reduction along two dimensions.
 
     Eigen::Tensor<float, 3, Eigen::ColMajor> a(2, 3, 4);
-    a.setValues({ {{0.0f, 1.0f, 2.0f, 3.0f},
+    a.setValues({ { {0.0f, 1.0f, 2.0f, 3.0f},
                   {7.0f, 6.0f, 5.0f, 4.0f},
                   {8.0f, 9.0f, 10.0f, 11.0f} },
                  { {12.0f, 13.0f, 14.0f, 15.0f},
