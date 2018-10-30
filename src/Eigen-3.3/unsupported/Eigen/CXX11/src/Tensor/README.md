@@ -901,7 +901,7 @@ You can use cast() to lift this restriction.  For example this computes
 cubic roots of an int Tensor:
 
     Eigen::Tensor<int, 2> a(2, 3);
-    a.setValues({{0, 1, 8}, {27, 64, 125}});
+    a.setValues({ {0, 1, 8}, {27, 64, 125} });
     Eigen::Tensor<double, 2> b = a.cast<double>().pow(1.0 / 3.0);
     cout << "a" << endl << a << endl << endl;
     cout << "b" << endl << b << endl << endl;
@@ -1011,9 +1011,9 @@ multidimensional case.
 
     // Create 2 matrices using tensors of rank 2
     Eigen::Tensor<int, 2> a(2, 3);
-    a.setValues({{1, 2, 3}, {6, 5, 4}});
+    a.setValues({ {1, 2, 3}, {6, 5, 4} });
     Eigen::Tensor<int, 2> b(3, 2);
-    a.setValues({{1, 2}, {4, 5}, {5, 6}});
+    a.setValues({ {1, 2}, {4, 5}, {5, 6} });
 
     // Compute the traditional matrix product
     array<IndexPair<int>, 1> product_dims = { IndexPair(1, 0) };
@@ -1056,7 +1056,7 @@ Example: Reduction along one dimension.
 
     // Create a tensor of 2 dimensions
     Eigen::Tensor<int, 2> a(2, 3);
-    a.setValues({{1, 2, 3}, {6, 5, 4}});
+    a.setValues({ {1, 2, 3}, {6, 5, 4} });
     // Reduce it along the second dimension (1)...
     Eigen::array<int, 1> dims({1 /* dimension to reduce */});
     // ...using the "maximum" operator.
@@ -1077,12 +1077,12 @@ Example: Reduction along one dimension.
 Example: Reduction along two dimensions.
 
     Eigen::Tensor<float, 3, Eigen::ColMajor> a(2, 3, 4);
-    a.setValues({{{0.0f, 1.0f, 2.0f, 3.0f},
+    a.setValues({ {{0.0f, 1.0f, 2.0f, 3.0f},
                   {7.0f, 6.0f, 5.0f, 4.0f},
-                  {8.0f, 9.0f, 10.0f, 11.0f}},
-                 {{12.0f, 13.0f, 14.0f, 15.0f},
+                  {8.0f, 9.0f, 10.0f, 11.0f} },
+                 { {12.0f, 13.0f, 14.0f, 15.0f},
                   {19.0f, 18.0f, 17.0f, 16.0f},
-                  {20.0f, 21.0f, 22.0f, 23.0f}}});
+                  {20.0f, 21.0f, 22.0f, 23.0f} } });
     // The tensor a has 3 dimensions.  We reduce along the
     // first 2, resulting in a tensor with a single dimension
     // of size 4 (the last dimension of a.)
@@ -1105,12 +1105,12 @@ original tensor is reduced along *all* its dimensions.  The result is a
 scalar, represented as a zero-dimension tensor.
 
     Eigen::Tensor<float, 3> a(2, 3, 4);
-    a.setValues({{{0.0f, 1.0f, 2.0f, 3.0f},
+    a.setValues({ { {0.0f, 1.0f, 2.0f, 3.0f},
                   {7.0f, 6.0f, 5.0f, 4.0f},
-                  {8.0f, 9.0f, 10.0f, 11.0f}},
-                 {{12.0f, 13.0f, 14.0f, 15.0f},
+                  {8.0f, 9.0f, 10.0f, 11.0f} },
+                 { {12.0f, 13.0f, 14.0f, 15.0f},
                   {19.0f, 18.0f, 17.0f, 16.0f},
-                  {20.0f, 21.0f, 22.0f, 23.0f}}});
+                  {20.0f, 21.0f, 22.0f, 23.0f} } });
     // Reduce along all dimensions using the sum() operator.
     Eigen::Tensor<float, 0> b = a.sum();
     cout << "b" << endl << b << endl << endl;
@@ -1182,7 +1182,7 @@ dd a comment to this line
 
     // Create a tensor of 2 dimensions
     Eigen::Tensor<int, 2> a(2, 3);
-    a.setValues({{1, 2, 3}, {4, 5, 6}});
+    a.setValues({ {1, 2, 3}, {4, 5, 6} });
     // Scan it along the second dimension (1) using summation
     Eigen::Tensor<int, 2> b = a.cumsum(1);
     // The result is a tensor with the same size as the input
@@ -1263,11 +1263,11 @@ the number of elements in the input tensor.
     // Increase the rank of the input tensor by introducing a new dimension
     // of size 1.
     Tensor<float, 2> input(7, 11);
-    array<int, 3> three_dims{{7, 11, 1}};
+    array<int, 3> three_dims{ {7, 11, 1} };
     Tensor<float, 3> result = input.reshape(three_dims);
 
     // Decrease the rank of the input tensor by merging 2 dimensions;
-    array<int, 1> one_dim{{7 * 11}};
+    array<int, 1> one_dim{ {7 * 11} };
     Tensor<float, 1> result = input.reshape(one_dim);
 
 This operation does not move any data in the input tensor, so the resulting
@@ -1277,7 +1277,7 @@ For example this is what happens when you ```reshape()``` a 2D ColMajor tensor
 to one dimension:
 
     Eigen::Tensor<float, 2, Eigen::ColMajor> a(2, 3);
-    a.setValues({{0.0f, 100.0f, 200.0f}, {300.0f, 400.0f, 500.0f}});
+    a.setValues({ {0.0f, 100.0f, 200.0f}, {300.0f, 400.0f, 500.0f} });
     Eigen::array<Eigen::DenseIndex, 1> one_dim({3 * 2});
     Eigen::Tensor<float, 1, Eigen::ColMajor> b = a.reshape(one_dim);
     cout << "b" << endl << b << endl;
@@ -1293,7 +1293,7 @@ to one dimension:
 This is what happens when the 2D Tensor is RowMajor:
 
     Eigen::Tensor<float, 2, Eigen::RowMajor> a(2, 3);
-    a.setValues({{0.0f, 100.0f, 200.0f}, {300.0f, 400.0f, 500.0f}});
+    a.setValues({ {0.0f, 100.0f, 200.0f}, {300.0f, 400.0f, 500.0f} });
     Eigen::array<Eigen::DenseIndex, 1> one_dim({3 * 2});
     Eigen::Tensor<float, 1, Eigen::RowMajor> b = a.reshape(one_dim);
     cout << "b" << endl << b << endl;
@@ -1312,7 +1312,7 @@ side of the assignment operator.
 The previous example can be rewritten as follow:
 
     Eigen::Tensor<float, 2, Eigen::ColMajor> a(2, 3);
-    a.setValues({{0.0f, 100.0f, 200.0f}, {300.0f, 400.0f, 500.0f}});
+    a.setValues({ {0.0f, 100.0f, 200.0f}, {300.0f, 400.0f, 500.0f} });
     Eigen::array<Eigen::DenseIndex, 2> two_dim({2, 3});
     Eigen::Tensor<float, 1, Eigen::ColMajor> b;
     b.reshape(two_dim) = a;
@@ -1381,7 +1381,7 @@ ceil(input_dimensions[i] / strides[i]).
 For example this is what happens when you ```stride()``` a 2D tensor:
 
     Eigen::Tensor<int, 2> a(4, 3);
-    a.setValues({{0, 100, 200}, {300, 400, 500}, {600, 700, 800}, {900, 1000, 1100}});
+    a.setValues({ {0, 100, 200}, {300, 400, 500}, {600, 700, 800}, {900, 1000, 1100} });
     Eigen::array<Eigen::DenseIndex, 2> strides({3, 2});
     Eigen::Tensor<int, 2> b = a.stride(strides);
     cout << "b" << endl << b << endl;
@@ -1404,8 +1404,8 @@ made of the coefficients stored between offset[i] and offset[i] + extents[i] in
 the input tensor.
 
     Eigen::Tensor<int, 2> a(4, 3);
-    a.setValues({{0, 100, 200}, {300, 400, 500},
-                 {600, 700, 800}, {900, 1000, 1100}});
+    a.setValues({ {0, 100, 200}, {300, 400, 500},
+                 {600, 700, 800}, {900, 1000, 1100} });
     Eigen::array<int, 2> offsets = {1, 0};
     Eigen::array<int, 2> extents = {2, 2};
     Eigen::Tensor<int, 1> slice = a.slice(offsets, extents);
@@ -1433,8 +1433,8 @@ For example, a matrix chip would be either a row or a column of the input
 matrix.
 
     Eigen::Tensor<int, 2> a(4, 3);
-    a.setValues({{0, 100, 200}, {300, 400, 500},
-                 {600, 700, 800}, {900, 1000, 1100}});
+    a.setValues({ {0, 100, 200}, {300, 400, 500},
+                 {600, 700, 800}, {900, 1000, 1100} });
     Eigen::Tensor<int, 1> row_3 = a.chip(2, 0);
     Eigen::Tensor<int, 1> col_2 = a.chip(1, 1);
     cout << "a" << endl << a << endl;
@@ -1457,7 +1457,7 @@ It is possible to assign values to a tensor chip since the chip operation is a
 lvalue. For example:
 
     Eigen::Tensor<int, 1> a(3);
-    a.setValues({{100, 200, 300}});
+    a.setValues({ {100, 200, 300} });
     Eigen::Tensor<int, 2> b(2, 3);
     b.setZero();
     b.chip(0, 0) = a;
@@ -1486,8 +1486,8 @@ For example this is what happens when you ```reverse()``` the first dimension
 of a 2D tensor:
 
     Eigen::Tensor<int, 2> a(4, 3);
-    a.setValues({{0, 100, 200}, {300, 400, 500},
-                {600, 700, 800}, {900, 1000, 1100}});
+    a.setValues({ {0, 100, 200}, {300, 400, 500},
+                {600, 700, 800}, {900, 1000, 1100} });
     Eigen::array<bool, 2> reverse({true, false});
     Eigen::Tensor<int, 2> b = a.reverse(reverse);
     cout << "a" << endl << a << endl << "b" << endl << b << endl;
@@ -1512,7 +1512,7 @@ The broadcast argument specifies how many copies of the input tensor need to be
 made in each of the dimensions.
 
     Eigen::Tensor<int, 2> a(2, 3);
-    a.setValues({{0, 100, 200}, {300, 400, 500}});
+    a.setValues({ {0, 100, 200}, {300, 400, 500} });
     Eigen::array<int, 2> bcast({3, 2});
     Eigen::Tensor<int, 2> b = a.broadcast(bcast);
     cout << "a" << endl << a << endl << "b" << endl << b << endl;
@@ -1537,7 +1537,7 @@ TODO
 Returns a view of the input tensor in which the input is padded with zeros.
 
     Eigen::Tensor<int, 2> a(2, 3);
-    a.setValues({{0, 100, 200}, {300, 400, 500}});
+    a.setValues({ {0, 100, 200}, {300, 400, 500} });
     Eigen::array<pair<int, int>, 2> paddings;
     paddings[0] = make_pair(0, 1);
     paddings[1] = make_pair(2, 3);
@@ -1569,9 +1569,9 @@ dimension in RowMajor layout.
 For example, given the following input tensor:
 
   Eigen::Tensor<float, 2, DataLayout> tensor(3,4);
-  tensor.setValues({{0.0f, 1.0f, 2.0f, 3.0f},
+  tensor.setValues({ {0.0f, 1.0f, 2.0f, 3.0f},
                     {4.0f, 5.0f, 6.0f, 7.0f},
-                    {8.0f, 9.0f, 10.0f, 11.0f}});
+                    {8.0f, 9.0f, 10.0f, 11.0f} });
 
   cout << "tensor: " << endl << tensor << endl;
 =>
@@ -1715,7 +1715,7 @@ Tensors of integers.  This is not currently supported by the Tensor library
 but you can easily cast the tensors to floats to do the division:
 
     Eigen::Tensor<int, 2> a(2, 3);
-    a.setValues({{0, 1, 2}, {3, 4, 5}});
+    a.setValues({ {0, 1, 2}, {3, 4, 5} });
     Eigen::Tensor<int, 2> b =
         (a.cast<float>() / a.constant(2).cast<float>()).cast<int>();
     cout << "a" << endl << a << endl << endl;
